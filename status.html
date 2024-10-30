@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PC Gaming Status</title>
+    <link rel="icon" href="./images/logo.png" class="logo" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>PC Gaming Status</h1>
+      <div class="status-container">
+        <img src="images/comp.png" alt="Computer Icon" class="computer-icon" />
+        <div>
+          <p>Graphics Card: <span id="graphicsCard"></span></p>
+          <p>Storage: <span id="storage"></span> GB</p>
+          <p>RAM: <span id="ram"></span> GB</p>
+          <p>Status: <span id="status"></span></p>
+        </div>
+      </div>
+      <!-- Back Button to go back to the main page -->
+      <button onclick="goBack()" class="back-button">Back</button>
+    </div>
+
+    <script>
+      // Retrieve values from localStorage
+      const graphicsCard = localStorage.getItem("graphicsCard");
+      const storage = localStorage.getItem("storage");
+      const ram = localStorage.getItem("ram");
+
+      // Display the retrieved values
+      document.getElementById("graphicsCard").textContent = graphicsCard;
+      document.getElementById("storage").textContent = storage;
+      document.getElementById("ram").textContent = ram;
+
+      // Predefined list of acceptable Graphics Card models (minimum: NVidia RTX 3060 Ti)
+      const acceptableGraphicsCards = [
+        "RTX 3060",
+        "RTX 3060 Ti",
+        "RTX 3070",
+        "RTX 3070 Ti",
+        "RTX 3080",
+        "RTX 3080 Ti",
+        "RTX 3090",
+        "RTX 3090 Ti",
+        "RTX 4050",
+        "RTX 4050 Ti",
+        "RTX 4060",
+        "RTX 4060 Ti",
+        "RTX 4070",
+        "RTX 4070 Ti",
+        "RTX 4080",
+        "RTX 4090",
+        "RTX 4090 Ti",
+        "RX 7900 XTX",
+        "RX 7800 XT",
+        "RX 7700 XT",
+        "RX 7600",
+        "RX 6500 XT",
+        "Arc A770",
+        "Arc A750",
+        "Arc A580",
+      ];
+
+      // Initialize flags and a list to track components that need an upgrade
+      let componentsToUpgrade = [];
+
+      // Check for incomplete graphics card input
+      if (
+        graphicsCard.toLowerCase().includes("rtx") &&
+        !acceptableGraphicsCards.some((card) =>
+          graphicsCard.toLowerCase().includes(card.toLowerCase())
+        )
+      ) {
+        componentsToUpgrade.push(
+          "Need to upgrade to a different graphics card"
+        );
+      } else {
+        // Check if the Graphics Card is acceptable or needs an upgrade
+        const isGoodGraphicsCard = acceptableGraphicsCards.some((card) =>
+          graphicsCard.toLowerCase().includes(card.toLowerCase())
+        );
+
+        if (!isGoodGraphicsCard) {
+          componentsToUpgrade.push("Graphics Card");
+        }
+      }
+
+      // Check if Storage and RAM meet minimum requirements
+      if (parseInt(storage) < 1000) {
+        componentsToUpgrade.push("Need better Storage");
+      }
+
+      if (parseInt(ram) < 16) {
+        componentsToUpgrade.push("Need better RAM");
+      }
+
+      // Determine the final status based on the number of "bad" components
+      let statusMessage = "";
+      let statusColor = "";
+
+      // Count how many components are "bad"
+      const badCount = componentsToUpgrade.length;
+
+      if (badCount === 0) {
+        statusMessage = "Good to go!";
+        statusColor = "green";
+      } else if (badCount === 1) {
+        statusMessage = `Needs Upgrade: ${componentsToUpgrade.join(", ")}`;
+        statusColor = "orange";
+      } else if (badCount === 2) {
+        statusMessage = `2 components need a serious upgrade: ${componentsToUpgrade.join(
+          " and "
+        )}`;
+        statusColor = "violet";
+      } else {
+        statusMessage = `All 3 components need an upgrade: ${componentsToUpgrade.join(
+          ", "
+        )}`;
+        statusColor = "red";
+      }
+
+      // Display the status message and set the color
+      document.getElementById("status").textContent = statusMessage;
+      document.getElementById("status").style.color = statusColor;
+
+      // Function to go back to the main page
+      function goBack() {
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>

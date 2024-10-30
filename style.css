@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #007eec;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    padding: 50px 40px;
+    border-radius: 20px;
+    width: 900px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.computer-icon {
+    width: 150px;
+    height: 100px;
+    background-size: cover;
+    margin-bottom: 20px;
+}
+
+.logo {
+    background-color: None;
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border-radius: 25px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    border-radius: 25px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 96%;
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 0;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    width: 20%;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#warningMessage {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}

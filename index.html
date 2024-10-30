@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PC Gaming Checker</title>
+    <link rel="icon" href="./images/logo.png" class="logo" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Enter PC Details</h1>
+      <p>Check the gaming capability of your PC for 2024 standards</p>
+      <br />
+      <form id="pcDetailsForm">
+        <div class="form-group">
+          <label for="graphicsCard">Graphics Card:</label>
+          <select id="graphicsCard" name="graphicsCard">
+            <option value="">Select Graphics Card</option>
+            <optgroup label="NVIDIA">
+              <option value="RTX 3050">NVIDIA GeForce RTX 3050</option>
+              <option value="RTX 3050 Ti">NVIDIA GeForce RTX 3050Ti</option>
+              <option value="RTX 3060">NVIDIA GeForce RTX 3060</option>
+              <option value="RTX 3060 Ti">NVIDIA GeForce RTX 3060Ti</option>
+              <option value="RTX 3070">NVIDIA GeForce RTX 3070</option>
+              <option value="RTX 3070 Ti">NVIDIA GeForce RTX 3070Ti</option>
+              <option value="RTX 3090">NVIDIA GeForce RTX 3090</option>
+              <option value="RTX 3090 Ti">NVIDIA GeForce RTX 3090Ti</option>
+              <option value="RTX 4050">NVIDIA GeForce RTX 4050</option>
+              <option value="RTX 4050 Ti">NVIDIA GeForce RTX 4050Ti</option>
+              <option value="RTX 4070">NVIDIA GeForce RTX 4070</option>
+              <option value="RTX 4070 Ti">NVIDIA GeForce RTX 4070Ti</option>
+              <option value="RTX 4090">NVIDIA GeForce RTX 4090</option>
+              <option value="RTX 4090 Ti">NVIDIA GeForce RTX 4090Ti</option>
+            </optgroup>
+            <optgroup label="AMD">
+              <option value="RX 7900 XTX">AMD Radeon RX 7900 XTX</option>
+              <option value="RX 7800 XT">AMD Radeon RX 7800 XT</option>
+              <option value="RX 7700 XT">AMD Radeon RX 7700 XT</option>
+              <option value="RX 7600">AMD Radeon RX 7600</option>
+              <option value="RX 6500 XT">AMD Radeon RX 6500 XT</option>
+            </optgroup>
+            <optgroup label="Intel">
+              <option value="Arc A770">Intel Arc A770</option>
+              <option value="Arc A750">Intel Arc A750</option>
+              <option value="Arc A580">Intel Arc A580</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="storage">Storage (GB):</label>
+          <input
+            type="number"
+            id="storage"
+            name="storage"
+            placeholder="e.g., 512"
+          />
+        </div>
+        <div class="form-group">
+          <label for="ram">RAM (GB):</label>
+          <input type="number" id="ram" name="ram" placeholder="e.g., 16" />
+        </div>
+        <p id="warningMessage" style="color: red; display: none"></p>
+        <button type="button" onclick="continueToStatus()">Continue</button>
+      </form>
+    </div>
+
+    <script>
+      // Function to handle the "Continue" button click
+      function continueToStatus() {
+        const graphicsCard = document
+          .getElementById("graphicsCard")
+          .value.trim();
+        const storage = document.getElementById("storage").value.trim();
+        const ram = document.getElementById("ram").value.trim();
+        const warningMessage = document.getElementById("warningMessage");
+        warningMessage.style.display = "none";
+
+        const graphicsCardPattern = /(RTX|GTX|RX|Radeon|Intel)/i;
+        if (!graphicsCard || !graphicsCardPattern.test(graphicsCard)) {
+          warningMessage.textContent =
+            'Please enter a valid Graphics Card model, like "RTX 3060".';
+          warningMessage.style.display = "block";
+          return;
+        }
+
+        if (
+          !storage ||
+          isNaN(storage) ||
+          parseInt(storage) <= 0 ||
+          parseInt(storage) > 2000
+        ) {
+          warningMessage.textContent =
+            "Please enter a valid storage size in GB (e.g., between 1 and 2000).";
+          warningMessage.style.display = "block";
+          return;
+        }
+
+        if (!ram || isNaN(ram) || parseInt(ram) <= 0 || parseInt(ram) > 128) {
+          warningMessage.textContent =
+            "Please enter a valid RAM size in GB (e.g., between 1 and 128).";
+          warningMessage.style.display = "block";
+          return;
+        }
+
+        warningMessage.style.display = "none";
+        localStorage.setItem("graphicsCard", graphicsCard);
+        localStorage.setItem("storage", storage);
+        localStorage.setItem("ram", ram);
+        window.location.href = "status.html";
+      }
+    </script>
+  </body>
+</html>
